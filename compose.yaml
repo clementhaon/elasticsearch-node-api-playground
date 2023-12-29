@@ -3,6 +3,8 @@ services:
     build:
       context: .
     restart: always
+    networks:
+      - elastic
     environment:
       NODE_ENV: production
     ports:
@@ -31,9 +33,12 @@ services:
     image: certbot/certbot
     container_name: certbot
     restart: unless-stopped
+    networks:
+      - elastic
     volumes:
       - ./certs:/etc/letsencrypt
       - ./nginx.conf:/etc/nginx/nginx.conf
+      - /var/www/html:/var/www/html
     command: certonly --webroot --webroot-path=/var/www/html --agree-tos --email clement@klem-online-cloudy.fr -d klem-online-cloudy.fr -d www.klem-online-cloudy.fr
 
   nginx:
