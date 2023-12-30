@@ -32,14 +32,15 @@ services:
   certbot:
     image: certbot/certbot
     container_name: certbot
-    restart: unless-stopped
     networks:
       - elastic
     volumes:
-      - ./certs:/etc/letsencrypt
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - /var/www/html:/var/www/html
+      - ./certs:/etc/letsencrypt:rw
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /var/www/html:/var/www/html:rw
+      - /var/log/letsencrypt:/var/log/letsencrypt:rw
     command: certonly --webroot --webroot-path=/var/www/html --agree-tos --email clement@klem-online-cloudy.fr -d klem-online-cloudy.fr -d www.klem-online-cloudy.fr
+    #user: "33:33" 
 
   nginx:
     image: nginx:latest
@@ -51,8 +52,9 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./certs:/etc/letsencrypt
-      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./certs:/etc/letsencrypt:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /var/www/html:/var/www/html:rw
     depends_on:
       - certbot
   # elastic-agent:
