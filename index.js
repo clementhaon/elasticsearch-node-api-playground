@@ -7,8 +7,7 @@ const fs = require('fs');
 const { readFile } = require('node:fs/promises');
 const { resolve } = require('node:path');
 
-
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
   res.send('Hello World!')
 })
 const connection = () => {
@@ -34,7 +33,7 @@ const connection = () => {
 }
 const client = connection();
 
-app.get('/init-fake-data', async (req, res) => {
+app.get('/api/init-fake-data', async (req, res) => {
   try {
     //Init file path
     const filePath = resolve('./merge-mock-data-final-20.json');
