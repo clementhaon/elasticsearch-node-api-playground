@@ -86,3 +86,7 @@ typings/
 
 # DynamoDB Local files
 .dynamodb/
+
+http_ca.crt
+
+merge-mock-data-final-20.json
