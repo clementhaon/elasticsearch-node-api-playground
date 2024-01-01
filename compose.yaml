@@ -28,9 +28,7 @@ services:
       - elastic
     ports:
       - "5601:5601"
-    environment:
-      - SERVER_BASEPATH=/kibana
-
+      
   certbot:
     image: certbot/certbot:latest
     container_name: certbot
