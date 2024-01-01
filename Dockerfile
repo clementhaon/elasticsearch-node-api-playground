@@ -9,7 +9,7 @@ ARG NODE_VERSION=18
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV staging
 
 
 WORKDIR /usr/src/app
