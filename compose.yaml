@@ -18,7 +18,7 @@ services:
       - elastic
     ports:
       - "9200:9200"
-    mem_limit: 1g 
+    mem_limit: 2g
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.11.3

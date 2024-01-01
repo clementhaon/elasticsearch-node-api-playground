@@ -9,7 +9,7 @@ ARG NODE_VERSION=18
 FROM node:${NODE_VERSION}-alpine
 
 # Use production node environment by default.
-ENV NODE_ENV production
+ENV NODE_ENV staging
 
 
 WORKDIR /usr/src/app
@@ -23,11 +23,19 @@ RUN --mount=type=bind,source=package.json,target=package.json \
     --mount=type=cache,target=/root/.npm \
     npm ci --omit=dev
 
+# RUN chown -R node:node /usr/src/app
+
 # Run the application as a non-root user.
 USER node
 
 # Copy the rest of the source files into the image.
 COPY . .
+
+USER root
+RUN chmod +r /usr/src/app/http_ca.crt
+
+# Run the application as a non-root user.
+USER node
 
 # Expose the port that the application listens on.
 EXPOSE 8080
