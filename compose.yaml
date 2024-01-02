@@ -6,7 +6,7 @@ services:
     networks:
       - elastic
     environment:
-      NODE_ENV: production
+      NODE_ENV: staging
     ports:
       - 8080:8080
       
@@ -16,9 +16,11 @@ services:
     restart: always
     networks:
       - elastic
-    ports:
-      - "9200:9200"
     mem_limit: 2g
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
 
   kibana:
     image: docker.elastic.co/kibana/kibana:8.11.3
@@ -27,7 +29,7 @@ services:
     networks:
       - elastic
     ports:
-      - "5601:5601"
+      - 5601:5601
       
   certbot:
     image: certbot/certbot:latest
@@ -54,6 +56,7 @@ services:
       - ./certbot/www/:/var/www/certbot/:ro
     depends_on:
       - certbot
+    
   # elastic-agent:
   #   image: docker.elastic.co/beats/elastic-agent:8.11.3
   #   container_name: elastic-agent
@@ -73,3 +76,7 @@ services:
 networks:
   elastic:
     driver: bridge
+
+volumes:
+  es_data:
+    driver: local
