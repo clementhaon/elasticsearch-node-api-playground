@@ -19,14 +19,7 @@ const connection = () => {
         username: 'elastic',
         password: process.env.ELASTIC_PASSWORD
       },
-      // tls: {
-      //   ca: fs.readFileSync(process.env.PATH_CA_ELASTIC),
-      //   rejectUnauthorized: false
-      // }
     });
-
-    console.log('client', client);
-
     return client;
   } catch (error) {
     console.log('error connection elasticsearch', error);
